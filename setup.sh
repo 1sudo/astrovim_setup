@@ -14,7 +14,11 @@ curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | sudo gpg 
 echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | sudo tee /etc/apt/sources.list.d/nodesource.list
 sudo apt-get update
 
-sudo apt install wget curl git ripgrep xclip python3 python3-venv nodejs tmux -y
+sudo apt install wget curl git ripgrep xclip python3 python3-venv python3-pip nodejs tmux ruby ruby-dev -y
+
+sudo python3 -m pip install neovim
+sudo gem install neovim
+sudo npm install -g neovim
 
 wget https://github.com/neovim/neovim/releases/download/v$NVIM_VERSION/nvim.appimage
 mkdir -p ~/Apps
@@ -50,5 +54,12 @@ mkdir -p ~/.config/nvim/lua/plugins
 cp community.lua ~/.config/nvim/lua/plugins/
 
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+tmux_conf="~/.tmux.conf"
+echo "set-option -sg escape-time 10" >> $tmux_conf
+echo "set-option -g focus-events on" >> $tmux_conf
+echo 'set-option -g default-terminal "screen-256color"' >> $tmux_conf
+echo "set-option -sa terminal-features ',xterm-256color:RGB'" >> $tmux_conf
+echo "set-option -ga terminal-overrides ',xterm-256color:Tc'" >> $tmux_conf
 
 pkill -9 alacritty
